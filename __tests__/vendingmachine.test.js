@@ -63,6 +63,32 @@ describe('the vending machine', () => {
 
   })
 
+  test('deposit should increase customer funds', () => {
+    vending.deposit(30);
+
+    expect(vending.customerFunds).toEqual(30);
+
+    vending.deposit(40);
+
+    expect(vending.customerFunds).toEqual(70);
+  })
+
+  test('give change returns proper amount', () =>{
+    vending.deposit(5);
+
+    expect(vending.giveChange()).toEqual(5);
+    expect(vending.customerFunds).toEqual(0);
+  })
+
+  test('Updates inventory with bought snacks', () =>{
+    let item = new Item("Snickers", 1.5, "abc123");
+    let item2 = new Item("Coke", 1, "bcd552");
+
+    vending.snacks = [item, item2];
+    vending.buy("Coke");
+    expect(vending.snacks).not.toContainEqual({name:"Coke",price: 1,code: "bcd552"})
+  })
+
 
 
 });
